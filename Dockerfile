@@ -157,6 +157,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 
     $PIP_INSTALL \
         h5py \
+        fasteners \
+        tqdm \
         keras \
         && \
 
@@ -268,6 +270,18 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     sed -i '/Restore anaconda/,/^Not updating$/d' install.sh && \
     sed -i '/You might want to/,/^fi$/d' install.sh && \
     yes no | ./install.sh && \
+    sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sources.list'  && \
+    gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9  && \
+    gpg -a --export E084DAB9 |  apt-key add -  && \
+    apt-get -y update && DEBIAN_FRONTEND=noninteractive $APT_INSTALL r-base r-recommended \
+    libcurl4-gnutls-dev libxml2-dev libssl-dev python-pydot python-graphviz 	&& \
+	apt-get clean && \
+	apt-get autoremove && \
+	rm -rf /var/lib/apt/lists/* && \
+    Rscript -e 'install.packages(c("devtools","testthat"),dependencies = TRUE,repos="https://cloud.r-project.org/")'  && \
+    Rscript -e 'install.packages(c("dplyr","keras","repr", "IRdisplay", "evaluate", "crayon", "pbdZMQ", "devtools", "uuid", "digest"),dependencies=TRUE,repos="https://cloud.r-project.org/");devtools::install_github("IRkernel/IRkernel");IRkernel::installspec(user=FALSE)' && \
+
+
 
 
 # =================================
