@@ -1,5 +1,5 @@
 FROM nvidia/cuda:8.0-cudnn6-devel
-LABEL maintainer="Ming <i@ufoym.com>"
+LABEL maintainer="Sancar <sadali@afreeemailservice.com>"
 
 # =================================
 # cuda          8.0
