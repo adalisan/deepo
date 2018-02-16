@@ -269,7 +269,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     sed -i '/path_to_nvidiasmi/,/^fi$/d' install.sh && \
     sed -i '/Restore anaconda/,/^Not updating$/d' install.sh && \
     sed -i '/You might want to/,/^fi$/d' install.sh && \
-    yes no | ./install.sh && \
+    yes no | ./install.sh 
+    cd && \
     sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sources.list'  && \
     gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9  && \
     gpg -a --export E084DAB9 |  apt-key add -  && \
